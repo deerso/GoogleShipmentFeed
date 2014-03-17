@@ -1,26 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
+using System.IO;
+using System.Runtime.CompilerServices;
+using Chronos.Configuration;
 using FeedLibrary;
 using Models;
 
 namespace GoogleShipmentFeed
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-
-
             var dataRepo = new Data.Repo();
-            var feedData = dataRepo.GetShipmentFeed(DateTime.Now.BeginningOfDayYesterday());
+            var feedData = dataRepo.GetShipmentFeed((DateTime.Now - TimeSpan.FromDays(3)).BeginningOfDayYesterday());
             var feed = FeedMaker.GenerateFeed<Feed>(FeedType.TSV, new FeedOptions { QualifyOptions = QualifyData.None}, feedData );
             Console.Write(feed);
-            Console.Read();
-        }
 
+            var feedPath = ConfigUtils.GetAppSetting("feedFile");
+            var appendDate = ConfigUtils.GetAppSetting("appendDate", false);
+
+            if (appendDate)
+            {
+                feedPath = Path.GetFileNameWithoutExtension(feedPath) + DateTime.Now.ToString("yyyy-MM-dd") +
+                    Path.GetExtension(feedPath);
+            }
+            File.WriteAllText(feedPath, feed);
+        }
     }
 
     public static class DateTimeExtensions
