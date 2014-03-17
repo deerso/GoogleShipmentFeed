@@ -13,7 +13,7 @@ namespace Data
             _context = new ShipmentFeedDataContext();
         }
 
-        public IEnumerable<Feed> GetShipmentFeed(DateTime fromDate)
+        public IEnumerable<Feed> GetShipmentFeed(DateTime fromDate, DateTime toDate)
         {
 
             var query = _context.Trackings.Join(
@@ -23,7 +23,7 @@ namespace Data
                 (x, y) => new {Tracking = x, Order = y}
                 )
                 .Where(x => x.Order.OrderSource == "WS")
-                .Where(x => x.Tracking.DateAdded > fromDate);
+                .Where(x => x.Tracking.DateAdded > fromDate && x.Tracking.DateAdded <= toDate);
 
             return query.ToList().Select(x => new Feed
             {

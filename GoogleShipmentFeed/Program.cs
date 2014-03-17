@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Chronos;
 using Chronos.Configuration;
 using FeedLibrary;
 using Models;
@@ -12,8 +13,9 @@ namespace GoogleShipmentFeed
     {
         static void Main()
         {
+            var yesterday = DateTime.Today.AddDays(-1);
             var dataRepo = new Data.Repo();
-            var feedData = dataRepo.GetShipmentFeed((DateTime.Now - TimeSpan.FromDays(3)).BeginningOfDayYesterday());
+            var feedData = dataRepo.GetShipmentFeed(yesterday.StartOfDay(), yesterday.EndOfDay());
             var feed = FeedMaker.GenerateFeed<Feed>(FeedType.TSV, new FeedOptions { QualifyOptions = QualifyData.None}, feedData );
             Console.Write(feed);
 
