@@ -1,1 +1,25 @@
-﻿
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 14.875" name="ShipmentFeed">
+  <DataContextMoniker Name="/ShipmentFeedDataContext" />
+  <nestedChildShapes>
+    <classShape Id="0ab61002-1059-4003-8c25-acd50dc6368f" absoluteBounds="1.75, 3.875, 2, 10.809064127604165">
+      <DataClassMoniker Name="/ShipmentFeedDataContext/Order" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cd75c0e4-38d7-4fda-914d-4dba8d87be52" absoluteBounds="1.7650000000000001, 4.335, 1.9700000000000002, 10.249064127604166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="156a0bc2-c948-4fbe-8d94-6a192ab4174e" absoluteBounds="4.5, 3.625, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/ShipmentFeedDataContext/Tracking" />
+      <nestedChildShapes>
+        <elementListCompartment Id="507c308e-c9b1-4400-9dd5-30b8c99a0662" absoluteBounds="4.515, 4.085, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.75 : 5.40465413411458); (4.5 : 5.40465413411458)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ShipmentFeedDataContext/Order/Order_Tracking" />
+      <nodes>
+        <classShapeMoniker Id="0ab61002-1059-4003-8c25-acd50dc6368f" />
+        <classShapeMoniker Id="156a0bc2-c948-4fbe-8d94-6a192ab4174e" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
