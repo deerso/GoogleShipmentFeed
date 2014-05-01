@@ -45,7 +45,7 @@ namespace GoogleShipmentFeed
 
         private static void Init()
         {
-            LogManager.LogFactory = new DeersoLogFactory(debugEnabled:true, notifyNames: new [] {"@KyleGobel"});
+            LogManager.LogFactory = new DeersoLogFactory(debugEnabled:false, notifyNames: new [] {"@KyleGobel"});
             _log = LogManager.GetLogger("");
         }
 
