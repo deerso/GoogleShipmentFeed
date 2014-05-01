@@ -32,9 +32,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Chronos, Version=0.0.13.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Chronos, Version=0.0.34.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Chronos.0.0.13\lib\net45\Chronos.dll</HintPath>
+      <HintPath>..\packages\Deerso.Logging.0.1.3\lib\Chronos.dll</HintPath>
+    </Reference>
+    <Reference Include="Deerso.Logging">
+      <HintPath>..\packages\Deerso.Logging.0.1.3\lib\Deerso.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\packages\Deerso.Logging.0.1.3\lib\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\packages\Deerso.Logging.0.1.3\lib\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
