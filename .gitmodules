@@ -1,3 +1,6 @@
 [submodule "feedMaker"]
 	path = src/feedMaker
 	url = git@bitbucket.org:deerso/feedmaker.git
+[submodule "src/feedMaker"]
+	path = src/feedMaker
+	url = git@bitbucket.org:deerso/feedmaker.git
