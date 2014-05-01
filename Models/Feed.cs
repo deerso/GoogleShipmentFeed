@@ -9,16 +9,25 @@ namespace Models
 {
     public class Feed
     {
-        [FeedData(HeaderName = "Order ID")]
+        [FeedData(HeaderName = "order id")]
         public string OrderId { get; set; }
 
-        [FeedData(HeaderName = "Shipment Date")]
+        [FeedData(HeaderName = "ship date")]
         public string ShipmentDate { get; set; }
 
-        [FeedData(HeaderName = "Carrier Tracking Number")]
+        [FeedData(HeaderName = "tracking number")]
         public string CarrierTrackingNumber { get; set; }
 
-        [FeedData(HeaderName = "Carrier Name")]
+        [FeedData(HeaderName = "carrier code")]
         public string CarrierName { get; set; }
+    }
+
+    public class CancelFeed
+    {
+        [FeedData(HeaderName = "order id")]
+        public string OrderId { get; set; }
+        
+        [FeedData(HeaderName = "reason")]
+        public string ReasonForCancellation { get; set; }
     }
 }

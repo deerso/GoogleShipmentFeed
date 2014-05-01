@@ -30,12 +30,15 @@ namespace Data
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertOrder(Order instance);
-    partial void UpdateOrder(Order instance);
-    partial void DeleteOrder(Order instance);
     partial void InsertTracking(Tracking instance);
     partial void UpdateTracking(Tracking instance);
     partial void DeleteTracking(Tracking instance);
+    partial void InsertCancelReason(CancelReason instance);
+    partial void UpdateCancelReason(CancelReason instance);
+    partial void DeleteCancelReason(CancelReason instance);
+    partial void InsertOrder(Order instance);
+    partial void UpdateOrder(Order instance);
+    partial void DeleteOrder(Order instance);
     #endregion
 		
 		public ShipmentFeedDataContext() : 
@@ -68,6 +71,22 @@ namespace Data
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Tracking> Trackings
+		{
+			get
+			{
+				return this.GetTable<Tracking>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CancelReason> CancelReasons
+		{
+			get
+			{
+				return this.GetTable<CancelReason>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Order> Orders
 		{
 			get
@@ -75,13 +94,534 @@ namespace Data
 				return this.GetTable<Order>();
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tracking")]
+	public partial class Tracking : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		public System.Data.Linq.Table<Tracking> Trackings
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _OrderTrackingID;
+		
+		private int _OrderNum;
+		
+		private string _TrackingID;
+		
+		private string _PickupDate;
+		
+		private string _Carrier;
+		
+		private bool _EmailSent;
+		
+		private bool _StatusSent;
+		
+		private System.Nullable<System.DateTime> _DateAdded;
+		
+		private System.Nullable<int> _NumericKey;
+		
+		private bool _External;
+		
+		private string _Invoice;
+		
+		private System.Nullable<int> _ServiceTypeID;
+		
+		private bool _Sent;
+		
+		private EntityRef<Order> _Order;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnOrderTrackingIDChanging(int value);
+    partial void OnOrderTrackingIDChanged();
+    partial void OnOrderNumChanging(int value);
+    partial void OnOrderNumChanged();
+    partial void OnTrackingIDChanging(string value);
+    partial void OnTrackingIDChanged();
+    partial void OnPickupDateChanging(string value);
+    partial void OnPickupDateChanged();
+    partial void OnCarrierChanging(string value);
+    partial void OnCarrierChanged();
+    partial void OnEmailSentChanging(bool value);
+    partial void OnEmailSentChanged();
+    partial void OnStatusSentChanging(bool value);
+    partial void OnStatusSentChanged();
+    partial void OnDateAddedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateAddedChanged();
+    partial void OnNumericKeyChanging(System.Nullable<int> value);
+    partial void OnNumericKeyChanged();
+    partial void OnExternalChanging(bool value);
+    partial void OnExternalChanged();
+    partial void OnInvoiceChanging(string value);
+    partial void OnInvoiceChanged();
+    partial void OnServiceTypeIDChanging(System.Nullable<int> value);
+    partial void OnServiceTypeIDChanged();
+    partial void OnSentChanging(bool value);
+    partial void OnSentChanged();
+    #endregion
+		
+		public Tracking()
+		{
+			this._Order = default(EntityRef<Order>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderTrackingID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int OrderTrackingID
 		{
 			get
 			{
-				return this.GetTable<Tracking>();
+				return this._OrderTrackingID;
 			}
+			set
+			{
+				if ((this._OrderTrackingID != value))
+				{
+					this.OnOrderTrackingIDChanging(value);
+					this.SendPropertyChanging();
+					this._OrderTrackingID = value;
+					this.SendPropertyChanged("OrderTrackingID");
+					this.OnOrderTrackingIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderNum", DbType="Int NOT NULL")]
+		public int OrderNum
+		{
+			get
+			{
+				return this._OrderNum;
+			}
+			set
+			{
+				if ((this._OrderNum != value))
+				{
+					if (this._Order.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnOrderNumChanging(value);
+					this.SendPropertyChanging();
+					this._OrderNum = value;
+					this.SendPropertyChanged("OrderNum");
+					this.OnOrderNumChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackingID", DbType="NVarChar(50)")]
+		public string TrackingID
+		{
+			get
+			{
+				return this._TrackingID;
+			}
+			set
+			{
+				if ((this._TrackingID != value))
+				{
+					this.OnTrackingIDChanging(value);
+					this.SendPropertyChanging();
+					this._TrackingID = value;
+					this.SendPropertyChanged("TrackingID");
+					this.OnTrackingIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PickupDate", DbType="NVarChar(25)")]
+		public string PickupDate
+		{
+			get
+			{
+				return this._PickupDate;
+			}
+			set
+			{
+				if ((this._PickupDate != value))
+				{
+					this.OnPickupDateChanging(value);
+					this.SendPropertyChanging();
+					this._PickupDate = value;
+					this.SendPropertyChanged("PickupDate");
+					this.OnPickupDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Carrier", DbType="NVarChar(5)")]
+		public string Carrier
+		{
+			get
+			{
+				return this._Carrier;
+			}
+			set
+			{
+				if ((this._Carrier != value))
+				{
+					this.OnCarrierChanging(value);
+					this.SendPropertyChanging();
+					this._Carrier = value;
+					this.SendPropertyChanged("Carrier");
+					this.OnCarrierChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailSent", DbType="Bit NOT NULL")]
+		public bool EmailSent
+		{
+			get
+			{
+				return this._EmailSent;
+			}
+			set
+			{
+				if ((this._EmailSent != value))
+				{
+					this.OnEmailSentChanging(value);
+					this.SendPropertyChanging();
+					this._EmailSent = value;
+					this.SendPropertyChanged("EmailSent");
+					this.OnEmailSentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusSent", DbType="Bit NOT NULL")]
+		public bool StatusSent
+		{
+			get
+			{
+				return this._StatusSent;
+			}
+			set
+			{
+				if ((this._StatusSent != value))
+				{
+					this.OnStatusSentChanging(value);
+					this.SendPropertyChanging();
+					this._StatusSent = value;
+					this.SendPropertyChanged("StatusSent");
+					this.OnStatusSentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAdded", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateAdded
+		{
+			get
+			{
+				return this._DateAdded;
+			}
+			set
+			{
+				if ((this._DateAdded != value))
+				{
+					this.OnDateAddedChanging(value);
+					this.SendPropertyChanging();
+					this._DateAdded = value;
+					this.SendPropertyChanged("DateAdded");
+					this.OnDateAddedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumericKey", DbType="Int")]
+		public System.Nullable<int> NumericKey
+		{
+			get
+			{
+				return this._NumericKey;
+			}
+			set
+			{
+				if ((this._NumericKey != value))
+				{
+					this.OnNumericKeyChanging(value);
+					this.SendPropertyChanging();
+					this._NumericKey = value;
+					this.SendPropertyChanged("NumericKey");
+					this.OnNumericKeyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[External]", Storage="_External", DbType="Bit NOT NULL")]
+		public bool External
+		{
+			get
+			{
+				return this._External;
+			}
+			set
+			{
+				if ((this._External != value))
+				{
+					this.OnExternalChanging(value);
+					this.SendPropertyChanging();
+					this._External = value;
+					this.SendPropertyChanged("External");
+					this.OnExternalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Invoice", DbType="NVarChar(50)")]
+		public string Invoice
+		{
+			get
+			{
+				return this._Invoice;
+			}
+			set
+			{
+				if ((this._Invoice != value))
+				{
+					this.OnInvoiceChanging(value);
+					this.SendPropertyChanging();
+					this._Invoice = value;
+					this.SendPropertyChanged("Invoice");
+					this.OnInvoiceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTypeID", DbType="Int")]
+		public System.Nullable<int> ServiceTypeID
+		{
+			get
+			{
+				return this._ServiceTypeID;
+			}
+			set
+			{
+				if ((this._ServiceTypeID != value))
+				{
+					this.OnServiceTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._ServiceTypeID = value;
+					this.SendPropertyChanged("ServiceTypeID");
+					this.OnServiceTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sent", DbType="Bit NOT NULL")]
+		public bool Sent
+		{
+			get
+			{
+				return this._Sent;
+			}
+			set
+			{
+				if ((this._Sent != value))
+				{
+					this.OnSentChanging(value);
+					this.SendPropertyChanging();
+					this._Sent = value;
+					this.SendPropertyChanged("Sent");
+					this.OnSentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Tracking", Storage="_Order", ThisKey="OrderNum", OtherKey="OrderNumber", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Order Order
+		{
+			get
+			{
+				return this._Order.Entity;
+			}
+			set
+			{
+				Order previousValue = this._Order.Entity;
+				if (((previousValue != value) 
+							|| (this._Order.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Order.Entity = null;
+						previousValue.Trackings.Remove(this);
+					}
+					this._Order.Entity = value;
+					if ((value != null))
+					{
+						value.Trackings.Add(this);
+						this._OrderNum = value.OrderNumber;
+					}
+					else
+					{
+						this._OrderNum = default(int);
+					}
+					this.SendPropertyChanged("Order");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="OPS.CancelReasons")]
+	public partial class CancelReason : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _CancelReasonsID;
+		
+		private string _Reason;
+		
+		private string _FeedValue;
+		
+		private EntitySet<Order> _Orders;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCancelReasonsIDChanging(int value);
+    partial void OnCancelReasonsIDChanged();
+    partial void OnReasonChanging(string value);
+    partial void OnReasonChanged();
+    partial void OnFeedValueChanging(string value);
+    partial void OnFeedValueChanged();
+    #endregion
+		
+		public CancelReason()
+		{
+			this._Orders = new EntitySet<Order>(new Action<Order>(this.attach_Orders), new Action<Order>(this.detach_Orders));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CancelReasonsID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int CancelReasonsID
+		{
+			get
+			{
+				return this._CancelReasonsID;
+			}
+			set
+			{
+				if ((this._CancelReasonsID != value))
+				{
+					this.OnCancelReasonsIDChanging(value);
+					this.SendPropertyChanging();
+					this._CancelReasonsID = value;
+					this.SendPropertyChanged("CancelReasonsID");
+					this.OnCancelReasonsIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reason", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Reason
+		{
+			get
+			{
+				return this._Reason;
+			}
+			set
+			{
+				if ((this._Reason != value))
+				{
+					this.OnReasonChanging(value);
+					this.SendPropertyChanging();
+					this._Reason = value;
+					this.SendPropertyChanged("Reason");
+					this.OnReasonChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FeedValue", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string FeedValue
+		{
+			get
+			{
+				return this._FeedValue;
+			}
+			set
+			{
+				if ((this._FeedValue != value))
+				{
+					this.OnFeedValueChanging(value);
+					this.SendPropertyChanging();
+					this._FeedValue = value;
+					this.SendPropertyChanged("FeedValue");
+					this.OnFeedValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CancelReason_Order", Storage="_Orders", ThisKey="CancelReasonsID", OtherKey="CancelReasonID")]
+		public EntitySet<Order> Orders
+		{
+			get
+			{
+				return this._Orders;
+			}
+			set
+			{
+				this._Orders.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Orders(Order entity)
+		{
+			this.SendPropertyChanging();
+			entity.CancelReason = this;
+		}
+		
+		private void detach_Orders(Order entity)
+		{
+			this.SendPropertyChanging();
+			entity.CancelReason = null;
 		}
 	}
 	
@@ -195,7 +735,15 @@ namespace Data
 		
 		private string _RefererUrl;
 		
+		private System.Nullable<int> _CancelReasonID;
+		
 		private EntitySet<Tracking> _Trackings;
+		
+		private EntityRef<Order> _Order2;
+		
+		private EntityRef<CancelReason> _CancelReason;
+		
+		private EntityRef<Order> _Order1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -305,11 +853,16 @@ namespace Data
     partial void OnIPChanged();
     partial void OnRefererUrlChanging(string value);
     partial void OnRefererUrlChanged();
+    partial void OnCancelReasonIDChanging(System.Nullable<int> value);
+    partial void OnCancelReasonIDChanged();
     #endregion
 		
 		public Order()
 		{
 			this._Trackings = new EntitySet<Tracking>(new Action<Tracking>(this.attach_Trackings), new Action<Tracking>(this.detach_Trackings));
+			this._Order2 = default(EntityRef<Order>);
+			this._CancelReason = default(EntityRef<CancelReason>);
+			this._Order1 = default(EntityRef<Order>);
 			OnCreated();
 		}
 		
@@ -324,6 +877,10 @@ namespace Data
 			{
 				if ((this._OrderNumber != value))
 				{
+					if (this._Order1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnOrderNumberChanging(value);
 					this.SendPropertyChanging();
 					this._OrderNumber = value;
@@ -1353,6 +1910,30 @@ namespace Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CancelReasonID", DbType="Int")]
+		public System.Nullable<int> CancelReasonID
+		{
+			get
+			{
+				return this._CancelReasonID;
+			}
+			set
+			{
+				if ((this._CancelReasonID != value))
+				{
+					if (this._CancelReason.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCancelReasonIDChanging(value);
+					this.SendPropertyChanging();
+					this._CancelReasonID = value;
+					this.SendPropertyChanged("CancelReasonID");
+					this.OnCancelReasonIDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Tracking", Storage="_Trackings", ThisKey="OrderNumber", OtherKey="OrderNum")]
 		public EntitySet<Tracking> Trackings
 		{
@@ -1363,6 +1944,103 @@ namespace Data
 			set
 			{
 				this._Trackings.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Order", Storage="_Order2", ThisKey="OrderNumber", OtherKey="OrderNumber", IsUnique=true, IsForeignKey=false)]
+		public Order Order2
+		{
+			get
+			{
+				return this._Order2.Entity;
+			}
+			set
+			{
+				Order previousValue = this._Order2.Entity;
+				if (((previousValue != value) 
+							|| (this._Order2.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Order2.Entity = null;
+						previousValue.Order1 = null;
+					}
+					this._Order2.Entity = value;
+					if ((value != null))
+					{
+						value.Order1 = this;
+					}
+					this.SendPropertyChanged("Order2");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CancelReason_Order", Storage="_CancelReason", ThisKey="CancelReasonID", OtherKey="CancelReasonsID", IsForeignKey=true)]
+		public CancelReason CancelReason
+		{
+			get
+			{
+				return this._CancelReason.Entity;
+			}
+			set
+			{
+				CancelReason previousValue = this._CancelReason.Entity;
+				if (((previousValue != value) 
+							|| (this._CancelReason.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CancelReason.Entity = null;
+						previousValue.Orders.Remove(this);
+					}
+					this._CancelReason.Entity = value;
+					if ((value != null))
+					{
+						value.Orders.Add(this);
+						this._CancelReasonID = value.CancelReasonsID;
+					}
+					else
+					{
+						this._CancelReasonID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("CancelReason");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Order", Storage="_Order1", ThisKey="OrderNumber", OtherKey="OrderNumber", IsForeignKey=true)]
+		public Order Order1
+		{
+			get
+			{
+				return this._Order1.Entity;
+			}
+			set
+			{
+				Order previousValue = this._Order1.Entity;
+				if (((previousValue != value) 
+							|| (this._Order1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Order1.Entity = null;
+						previousValue.Order2 = null;
+					}
+					this._Order1.Entity = value;
+					if ((value != null))
+					{
+						value.Order2 = this;
+						this._OrderNumber = value.OrderNumber;
+					}
+					else
+					{
+						this._OrderNumber = default(int);
+					}
+					this.SendPropertyChanged("Order1");
+				}
 			}
 		}
 		
@@ -1396,397 +2074,6 @@ namespace Data
 		{
 			this.SendPropertyChanging();
 			entity.Order = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tracking")]
-	public partial class Tracking : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _OrderTrackingID;
-		
-		private int _OrderNum;
-		
-		private string _TrackingID;
-		
-		private string _PickupDate;
-		
-		private string _Carrier;
-		
-		private bool _EmailSent;
-		
-		private bool _StatusSent;
-		
-		private System.Nullable<System.DateTime> _DateAdded;
-		
-		private System.Nullable<int> _NumericKey;
-		
-		private bool _External;
-		
-		private string _Invoice;
-		
-		private System.Nullable<int> _ServiceTypeID;
-		
-		private bool _Sent;
-		
-		private EntityRef<Order> _Order;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnOrderTrackingIDChanging(int value);
-    partial void OnOrderTrackingIDChanged();
-    partial void OnOrderNumChanging(int value);
-    partial void OnOrderNumChanged();
-    partial void OnTrackingIDChanging(string value);
-    partial void OnTrackingIDChanged();
-    partial void OnPickupDateChanging(string value);
-    partial void OnPickupDateChanged();
-    partial void OnCarrierChanging(string value);
-    partial void OnCarrierChanged();
-    partial void OnEmailSentChanging(bool value);
-    partial void OnEmailSentChanged();
-    partial void OnStatusSentChanging(bool value);
-    partial void OnStatusSentChanged();
-    partial void OnDateAddedChanging(System.Nullable<System.DateTime> value);
-    partial void OnDateAddedChanged();
-    partial void OnNumericKeyChanging(System.Nullable<int> value);
-    partial void OnNumericKeyChanged();
-    partial void OnExternalChanging(bool value);
-    partial void OnExternalChanged();
-    partial void OnInvoiceChanging(string value);
-    partial void OnInvoiceChanged();
-    partial void OnServiceTypeIDChanging(System.Nullable<int> value);
-    partial void OnServiceTypeIDChanged();
-    partial void OnSentChanging(bool value);
-    partial void OnSentChanged();
-    #endregion
-		
-		public Tracking()
-		{
-			this._Order = default(EntityRef<Order>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderTrackingID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int OrderTrackingID
-		{
-			get
-			{
-				return this._OrderTrackingID;
-			}
-			set
-			{
-				if ((this._OrderTrackingID != value))
-				{
-					this.OnOrderTrackingIDChanging(value);
-					this.SendPropertyChanging();
-					this._OrderTrackingID = value;
-					this.SendPropertyChanged("OrderTrackingID");
-					this.OnOrderTrackingIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderNum", DbType="Int NOT NULL")]
-		public int OrderNum
-		{
-			get
-			{
-				return this._OrderNum;
-			}
-			set
-			{
-				if ((this._OrderNum != value))
-				{
-					if (this._Order.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnOrderNumChanging(value);
-					this.SendPropertyChanging();
-					this._OrderNum = value;
-					this.SendPropertyChanged("OrderNum");
-					this.OnOrderNumChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackingID", DbType="NVarChar(50)")]
-		public string TrackingID
-		{
-			get
-			{
-				return this._TrackingID;
-			}
-			set
-			{
-				if ((this._TrackingID != value))
-				{
-					this.OnTrackingIDChanging(value);
-					this.SendPropertyChanging();
-					this._TrackingID = value;
-					this.SendPropertyChanged("TrackingID");
-					this.OnTrackingIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PickupDate", DbType="NVarChar(25)")]
-		public string PickupDate
-		{
-			get
-			{
-				return this._PickupDate;
-			}
-			set
-			{
-				if ((this._PickupDate != value))
-				{
-					this.OnPickupDateChanging(value);
-					this.SendPropertyChanging();
-					this._PickupDate = value;
-					this.SendPropertyChanged("PickupDate");
-					this.OnPickupDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Carrier", DbType="NVarChar(5)")]
-		public string Carrier
-		{
-			get
-			{
-				return this._Carrier;
-			}
-			set
-			{
-				if ((this._Carrier != value))
-				{
-					this.OnCarrierChanging(value);
-					this.SendPropertyChanging();
-					this._Carrier = value;
-					this.SendPropertyChanged("Carrier");
-					this.OnCarrierChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailSent", DbType="Bit NOT NULL")]
-		public bool EmailSent
-		{
-			get
-			{
-				return this._EmailSent;
-			}
-			set
-			{
-				if ((this._EmailSent != value))
-				{
-					this.OnEmailSentChanging(value);
-					this.SendPropertyChanging();
-					this._EmailSent = value;
-					this.SendPropertyChanged("EmailSent");
-					this.OnEmailSentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusSent", DbType="Bit NOT NULL")]
-		public bool StatusSent
-		{
-			get
-			{
-				return this._StatusSent;
-			}
-			set
-			{
-				if ((this._StatusSent != value))
-				{
-					this.OnStatusSentChanging(value);
-					this.SendPropertyChanging();
-					this._StatusSent = value;
-					this.SendPropertyChanged("StatusSent");
-					this.OnStatusSentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAdded", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DateAdded
-		{
-			get
-			{
-				return this._DateAdded;
-			}
-			set
-			{
-				if ((this._DateAdded != value))
-				{
-					this.OnDateAddedChanging(value);
-					this.SendPropertyChanging();
-					this._DateAdded = value;
-					this.SendPropertyChanged("DateAdded");
-					this.OnDateAddedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumericKey", DbType="Int")]
-		public System.Nullable<int> NumericKey
-		{
-			get
-			{
-				return this._NumericKey;
-			}
-			set
-			{
-				if ((this._NumericKey != value))
-				{
-					this.OnNumericKeyChanging(value);
-					this.SendPropertyChanging();
-					this._NumericKey = value;
-					this.SendPropertyChanged("NumericKey");
-					this.OnNumericKeyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[External]", Storage="_External", DbType="Bit NOT NULL")]
-		public bool External
-		{
-			get
-			{
-				return this._External;
-			}
-			set
-			{
-				if ((this._External != value))
-				{
-					this.OnExternalChanging(value);
-					this.SendPropertyChanging();
-					this._External = value;
-					this.SendPropertyChanged("External");
-					this.OnExternalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Invoice", DbType="NVarChar(50)")]
-		public string Invoice
-		{
-			get
-			{
-				return this._Invoice;
-			}
-			set
-			{
-				if ((this._Invoice != value))
-				{
-					this.OnInvoiceChanging(value);
-					this.SendPropertyChanging();
-					this._Invoice = value;
-					this.SendPropertyChanged("Invoice");
-					this.OnInvoiceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTypeID", DbType="Int")]
-		public System.Nullable<int> ServiceTypeID
-		{
-			get
-			{
-				return this._ServiceTypeID;
-			}
-			set
-			{
-				if ((this._ServiceTypeID != value))
-				{
-					this.OnServiceTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._ServiceTypeID = value;
-					this.SendPropertyChanged("ServiceTypeID");
-					this.OnServiceTypeIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sent", DbType="Bit NOT NULL")]
-		public bool Sent
-		{
-			get
-			{
-				return this._Sent;
-			}
-			set
-			{
-				if ((this._Sent != value))
-				{
-					this.OnSentChanging(value);
-					this.SendPropertyChanging();
-					this._Sent = value;
-					this.SendPropertyChanged("Sent");
-					this.OnSentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Tracking", Storage="_Order", ThisKey="OrderNum", OtherKey="OrderNumber", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public Order Order
-		{
-			get
-			{
-				return this._Order.Entity;
-			}
-			set
-			{
-				Order previousValue = this._Order.Entity;
-				if (((previousValue != value) 
-							|| (this._Order.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Order.Entity = null;
-						previousValue.Trackings.Remove(this);
-					}
-					this._Order.Entity = value;
-					if ((value != null))
-					{
-						value.Trackings.Add(this);
-						this._OrderNum = value.OrderNumber;
-					}
-					else
-					{
-						this._OrderNum = default(int);
-					}
-					this.SendPropertyChanged("Order");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 }

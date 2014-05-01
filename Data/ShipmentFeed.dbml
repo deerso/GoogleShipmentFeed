@@ -1,5 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Main" Class="ShipmentFeedDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=10.0.1.10;Initial Catalog=Main;Integrated Security=True" SettingsObjectName="Data.Properties.Settings" SettingsPropertyName="MainConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Tracking" Member="Trackings">
+    <Type Name="Tracking">
+      <Column Name="OrderTrackingID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderNum" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TrackingID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PickupDate" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="Carrier" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="EmailSent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="StatusSent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DateAdded" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NumericKey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[External]" Member="External" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ServiceTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Sent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Order_Tracking" Member="Order" ThisKey="OrderNum" OtherKey="OrderNumber" Type="Order" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="OPS.CancelReasons" Member="CancelReasons">
+    <Type Name="CancelReason">
+      <Column Name="CancelReasonsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Reason" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FeedValue" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="CancelReason_Order" Member="Orders" ThisKey="CancelReasonsID" OtherKey="CancelReasonID" Type="Order" />
+    </Type>
+  </Table>
   <Table Name="dbo.Orders" Member="Orders">
     <Type Name="Order">
       <Column Name="OrderNumber" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -54,25 +80,11 @@
       <Column Name="DateCanceled" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="IP" Type="System.String" DbType="VarChar(39)" CanBeNull="true" />
       <Column Name="RefererUrl" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="CancelReasonID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Order_Tracking" Member="Trackings" ThisKey="OrderNumber" OtherKey="OrderNum" Type="Tracking" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Tracking" Member="Trackings">
-    <Type Name="Tracking">
-      <Column Name="OrderTrackingID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="OrderNum" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="TrackingID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PickupDate" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
-      <Column Name="Carrier" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-      <Column Name="EmailSent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="StatusSent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="DateAdded" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="NumericKey" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="[External]" Member="External" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Invoice" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ServiceTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Sent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Order_Tracking" Member="Order" ThisKey="OrderNum" OtherKey="OrderNumber" Type="Order" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Order_Order" Member="Order2" ThisKey="OrderNumber" OtherKey="OrderNumber" Type="Order" Cardinality="One" />
+      <Association Name="CancelReason_Order" Member="CancelReason" ThisKey="CancelReasonID" OtherKey="CancelReasonsID" Type="CancelReason" IsForeignKey="true" />
+      <Association Name="Order_Order" Member="Order1" ThisKey="OrderNumber" OtherKey="OrderNumber" Type="Order" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
